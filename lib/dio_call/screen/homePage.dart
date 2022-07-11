@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_trainng_day1/model/author.dart';
+import 'package:flutter_trainng_day1/dio_call/model/author.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({
