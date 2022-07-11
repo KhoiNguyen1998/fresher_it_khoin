@@ -37,11 +37,11 @@ class _MyHomePageState extends State<MyHomePage> {
     listUsers = fetchUser();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    listUsers = fetchUser();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   listUsers = fetchUser()
+  // }
 
   @override
   Widget build(BuildContext context) {
