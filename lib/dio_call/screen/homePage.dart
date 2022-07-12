@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_trainng_day1/const/const.dart';
 import 'package:flutter_trainng_day1/dio_call/model/author.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({
@@ -86,50 +87,46 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
-              child: DefaultTabController(
-                length: 2,
-                child: TabBar(
-                  unselectedLabelColor: unSelectLabelColor,
-                  labelColor: selectedLabelColor,
-                  isScrollable: true,
-                  indicatorColor: Colors.transparent,
-                  labelStyle: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                  tabs: [
-                    Tab(
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(svg_clock),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            showRecentlyLoggedUsers,
-                            style: TextStyle(fontSize: 10.0),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Tab(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SvgPicture.asset(svg_monorchy),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            showUsersRank,
-                            style: TextStyle(fontSize: 10.0),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+            DefaultTabController(
+              length: 2,
+              child: TabBar(
+                unselectedLabelColor: unSelectLabelColor,
+                labelColor: selectedLabelColor,
+                isScrollable: true,
+                indicatorColor: Colors.transparent,
+                labelStyle: TextStyle(
+                  fontWeight: FontWeight.bold,
                 ),
+                tabs: [
+                  Tab(
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(svg_clock),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        AutoSizeText(
+                          showRecentlyLoggedUsers,
+                          style: TextStyle(fontSize: 10.0),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Tab(
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(svg_monorchy),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        AutoSizeText(
+                          showUsersRank,
+                          style: TextStyle(fontSize: 10.0),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -140,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
           unselectedLabelStyle: TextStyle(color: textBottombarColor),
           selectedLabelStyle: TextStyle(color: textBottombarColor),
           showUnselectedLabels: true,
-          showSelectedLabels: true,
+          // showSelectedLabels: true,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: SvgPicture.asset(svg_home),
