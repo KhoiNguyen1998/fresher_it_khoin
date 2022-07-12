@@ -8,7 +8,7 @@ const String svg_logo = 'assets/svg/logo.svg';
 const String svg_members = 'assets/svg/Members.svg';
 const String svg_message = 'assets/svg/Message.svg';
 const String svg_monorchy = 'assets/svg/monarchy.svg';
-const String svg_monarchy_gold = 'assets/svg/monarchy_gold.svg';
+const String svg_monarchy_gold = 'assets/svg/monarchy_g.svg';
 const String svg_speaker = 'assets/svg/Speaker.svg';
 const String svg_search = 'assets/svg/Vector.svg';
 const String svg_back = 'assets/svg/back.svg';
@@ -21,6 +21,8 @@ const textBottombarColor = const Color(0xFF212862);
 const headerColor = const Color(0xFFF2F2F2);
 const searchBoxColor = const Color(0xFFEAE9E9);
 const textSearchColor = const Color(0xFF060606);
+const unSelectLabelColor = const Color(0xFF939598);
+const selectedLabelColor = const Color(0xFF212862);
 
 /// String
 
