@@ -13,6 +13,7 @@ const String svg_speaker = 'assets/svg/Speaker.svg';
 const String svg_search = 'assets/svg/Vector.svg';
 const String svg_back = 'assets/svg/back.svg';
 const String svg_setting = 'assets/svg/symbol.svg';
+const String svg_dis_Clock = 'assets/svg/disable_clock.svg';
 
 /// Color
 const colorBottomIcon = const Color(0xFF212862);
