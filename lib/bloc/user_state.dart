@@ -1,24 +1,18 @@
 part of 'user_bloc.dart';
 
-@immutable
-abstract class UserState {}
-
-class UserLoadingState extends UserState {
+abstract class UserState extends Equatable {
+  const UserState();
+  @override
   List<Object> get props => [];
 }
 
-class UserLoadedState extends UserState {
-  final Stream<List<User>?> user;
+class UserInitial extends UserState {}
 
-  UserLoadedState(this.user);
+class UserLoadingState extends UserState {}
 
-  List<Object?> get props => [user];
+class UserLoaded extends UserState {
+  final List<User>? user;
+  UserLoaded(this.user);
 }
 
-class Name {}
-
-class UserErrorState extends UserState {
-  final String err;
-  UserErrorState(this.err);
-  List<Object?> get props => [err];
-}
+class UserErrorState extends UserState {}

@@ -1,15 +1,15 @@
 class User {
-  String name;
+  final String name;
   final int age;
   final String bio;
   final String position;
   final String job;
   final String company;
   final String address;
-  bool isPremium = true;
-  final String image;
+  final bool isPremium;
+  final String avatar;
 
-  User({
+  User({  
     required this.name,
     required this.age,
     required this.bio,
@@ -17,20 +17,35 @@ class User {
     required this.job,
     required this.company,
     required this.address,
-    this.isPremium = true,
-    required this.image,
+    required this.isPremium,
+    required this.avatar,
   });
   factory User.fromJson(Map<String, dynamic> parsejson) {
     return User(
-      name: parsejson['name'] as String,
-      age: parsejson['age'] as int,
-      bio: parsejson['bio'] as String,
-      position: parsejson['position'] as String,
-      job: parsejson['job'] as String,
-      company: parsejson['company'] as String,
-      address: parsejson['address'] as String,
-      isPremium: parsejson['sPremium'] ?? true,
-      image: parsejson['avatar'] as String,
+      name: parsejson['name'],
+      age: parsejson['age'],
+      bio: parsejson['bio'],
+      position: parsejson['position'],
+      job: parsejson['job'],
+      company: parsejson['company'],
+      address: parsejson['address'],
+      isPremium: parsejson['isPremium'] ?? false,
+      avatar: parsejson['avatar'],
     );
+  }
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'age': age,
+        'bio': bio,
+        'position': position,
+        'job': job,
+        'company': company,
+        'address': address,
+        'isPremium': isPremium,
+        'avatar': avatar
+      };
+  @override
+  String toString() {
+    return ' name: $name , age: $age, bio : $bio, company: $company, address: $address, ispremium: $isPremium, avatar: $avatar,';
   }
 }
