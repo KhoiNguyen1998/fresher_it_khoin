@@ -5,8 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_trainng_day1/bloc/user_bloc.dart';
 import 'package:flutter_trainng_day1/const/const.dart';
 import 'package:flutter_trainng_day1/data/model/author.dart';
-// import 'package:flutter_trainng_day1/dio_call/model/author.dart';
-// import 'package:auto_size_text/auto_size_text.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({
@@ -20,10 +18,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
-  // final UserBloc _userBloc = UserBloc();
   @override
   void initState() {
-    // _userBloc.add(UserFetcher());
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
   }
@@ -32,127 +28,57 @@ class _MyHomePageState extends State<MyHomePage>
   void dispose() {
     _tabController!.dispose();
     super.dispose();
-    // listUsers = fetchUser()
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      body:
-          // body: Container(
-          //   child: BlocProvider(
-          //     create: (_) => _userBloc,
-          //     child: BlocListener<UserBloc, UserState>(
-          //       listener: (context, state) {
-          //         if (state is UserErrorState) {
-          //           ScaffoldMessenger.of(context).showSnackBar(
-          //             SnackBar(
-          //               content: Text("Error"),
-          //             ),
-          //           );
-          //         }
-          //       },
-          //       child: BlocBuilder<UserBloc, UserState>(
-          //         builder: (context, state) {
-          //           if (state is UserInitial) {
-          //             return _buildLoading();
-          //           } else if (state is UserLoadingState) {
-          //             return _buildLoading();
-          //           } else if (state is UserLoaded) {
-          //             return _buildCard(context, state.user);
-          //           } else if (state is UserErrorState) {
-          //             return Text('erro');
-          //           } else {
-          //             return Container();
-          //           }
-          //         },
-          //       ),
-          //     ),
-          //   ),
-          // ),
-
-          _buildTabbar(),
-
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: backgroundButtombarColor,
-        unselectedItemColor: colorBottomIcon,
-        unselectedLabelStyle: TextStyle(color: textBottombarColor),
-        selectedLabelStyle: TextStyle(color: textBottombarColor),
-        showUnselectedLabels: true,
-        // showSelectedLabels: true,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(svg_home),
-            label: home,
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(svg_account),
-            label: myPage,
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(svg_speaker),
-            label: userAnnouncement,
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(svg_event),
-            label: eventCommunity,
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(svg_members),
-            label: listMember,
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(svg_message),
-            label: message,
-          ),
-        ],
-      ),
-
-      // FutureBuilder<List<User>?>(
-      //   future: listUsers,
-      //   builder: (context, snapshot) {
-      //     if (snapshot.hasData) {
-      //       return ListView.separated(
-      //         itemBuilder: (context, index) {
-      //           var user = (snapshot.data as List<User>)[index];
-      //           return Container(
-      //             child: Column(
-      //               children: [
-      //                 Text(user.name),
-      //                 Text(user.address),
-      //                 Text(user.bio),
-      //                 Text(user.company),
-      //                 Text(user.image),
-      //                 Text(user.position),
-      //                 Text(user.isPremium.toString()),
-      //                 Text('${user.age}'),
-      //                 Text(user.job),
-      //               ],
-      //             ),
-      //           );
-      //         },
-      //         separatorBuilder: (context, index) {
-      //           return Divider();
-      //         },
-      //         itemCount: (snapshot.data as List<User>).length,
-      //       );
-      //     } else if (snapshot.hasError) {
-      //       return Center(
-      //         child: Text('${snapshot.hasError}'),
-      //       );
-      //     }
-      //     return Center(
-      //       child: CircularProgressIndicator(
-      //         backgroundColor: Colors.amberAccent,
-      //       ),
-      //     );
-      //   },
-      // ),
-    ));
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        if (state is UserInitial) {
+          context.read<UserBloc>().add(UserNormalFetcherEvent());
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is UserLoadingState) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is UserNormalLoaded) {
+          return buildTabbarView(listUser: state.normalUser);
+        } else if (state is UserErrorState) {
+          return Center(
+            child: Text('Error!!'),
+          );
+        }
+        return Text('Error');
+      },
+    );
+    // return BlocProvider(
+    //   create: (context) => UserBloc(),
+    //   child: SafeArea(
+    //     child: Scaffold(
+    //       body: BlocBuilder<UserBloc, UserState>(
+    //         builder: (context, state) {
+    //           if (state is UserLoadingState)
+    //             return Center();
+    //           else if (state is UserErrorState)
+    //             return Center(
+    //               child: Text("Something went wrong"),
+    //             );
+    //           else if (state is UserNormalLoaded)
+    //             return buildTabbarView(listUser: state.normalUser);
+    //           else
+    //             return Center(
+    //               child: CircularProgressIndicator(),
+    //             );
+    //         },
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
-  Widget _buildTabbar() {
+  Widget buildTabbar() {
     return Column(
       children: <Widget>[
         Container(
@@ -198,6 +124,7 @@ class _MyHomePageState extends State<MyHomePage>
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 child: TabBar(
+                  onTap: (value) {},
                   controller: _tabController,
                   unselectedLabelColor: unSelectLabelColor,
                   labelColor: selectedLabelColor,
@@ -208,17 +135,19 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                   tabs: [
                     Tab(
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(svg_clock),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          AutoSizeText(
-                            showRecentlyLoggedUsers,
-                            style: TextStyle(fontSize: 10.0),
-                          ),
-                        ],
+                      child: Container(
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(svg_clock),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            AutoSizeText(
+                              showRecentlyLoggedUsers,
+                              style: TextStyle(fontSize: 10.0),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Tab(
@@ -247,15 +176,11 @@ class _MyHomePageState extends State<MyHomePage>
                   controller: _tabController,
                   children: [
                     Container(
-                      child: Center(
-                        child: Text('This is page 1'),
-                      ),
-                    ),
+                        // child: buildTabbarView(listUser: listNormalUser),
+                        ),
                     Container(
-                      child: Center(
-                        child: Text('This is page 2'),
-                      ),
-                    )
+                        // child: buildTabbarView(listUser: listPremiumUser),
+                        ),
                   ],
                 ),
               )
@@ -292,4 +217,39 @@ class _MyHomePageState extends State<MyHomePage>
   //     child: CircularProgressIndicator(),
   //   );
   // }
+}
+
+class buildTabbarView extends StatelessWidget {
+  buildTabbarView({
+    Key? key,
+    required this.listUser,
+  }) : super(key: key);
+
+  List<User>? listUser;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 16,
+        childAspectRatio: 1.6,
+        mainAxisSpacing: 16,
+      ),
+      itemCount: listUser!.length,
+      itemBuilder: (context, index) {
+        return Column(
+          children: [
+            // Text(listUser![index].bio),
+            // Text(),
+            // Text(),
+            // Text(),
+            // Text(),
+            // Text(),
+            // Text(),
+          ],
+        );
+      },
+    );
+  }
 }

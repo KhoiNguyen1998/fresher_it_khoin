@@ -9,7 +9,7 @@ class User {
   final bool isPremium;
   final String avatar;
 
-  User({  
+  User({
     required this.name,
     required this.age,
     required this.bio,
@@ -33,17 +33,6 @@ class User {
       avatar: parsejson['avatar'],
     );
   }
-  Map<String, dynamic> toJson() => {
-        'name': name,
-        'age': age,
-        'bio': bio,
-        'position': position,
-        'job': job,
-        'company': company,
-        'address': address,
-        'isPremium': isPremium,
-        'avatar': avatar
-      };
   @override
   String toString() {
     return ' name: $name , age: $age, bio : $bio, company: $company, address: $address, ispremium: $isPremium, avatar: $avatar,';

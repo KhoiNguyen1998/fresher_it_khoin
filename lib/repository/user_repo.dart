@@ -4,8 +4,12 @@ import 'api_provider.dart';
 
 class ApiRepository {
   final _provider = UserProvider();
-  Future<List<User>?> fetchUserList() {
-    return _provider.fetchUser();
+  Future<List<User>?> fetchListPremiumUser() {
+    return _provider.fetchPremiumUser();
+  }
+
+  Future<List<User>?> fetchListNormalUser() {
+    return _provider.fetchNormalUser();
   }
 }
 

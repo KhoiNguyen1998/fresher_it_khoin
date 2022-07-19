@@ -8,4 +8,8 @@ abstract class UserEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class UserFetcher extends UserEvent {}
+// class UserFetcher extends UserEvent {}
+
+class UserPremiumFetcherEvent extends UserEvent {}
+
+class UserNormalFetcherEvent extends UserEvent {}

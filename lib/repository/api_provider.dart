@@ -5,11 +5,33 @@ class UserProvider {
   final String url = 'https://agrichapp.herokuapp.com/members';
   Dio dio = Dio();
 
-  Future<List<User>?> fetchUser() async {
+  Future<List<User>?> fetchPremiumUser() async {
     try {
-      final res = await dio.get(url);
-      var userData = User.fromJson(res.data) as List<User>;
-      return userData;
+      final res = await dio.get(url, queryParameters: {'isPremium': true});
+      if (res.statusCode == 200) {
+        var getUserData = res.data as List;
+        var listPremiumUser = getUserData.map((e) => User.fromJson(e)).toList();
+        print(listPremiumUser);
+        return listPremiumUser;
+      } else {
+        throw Exception("Failed to load user");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<List<User>?> fetchNormalUser() async {
+    try {
+      final res = await dio.get(url, queryParameters: {'isPremium': false});
+      if (res.statusCode == 200) {
+        var getUserData = res.data as List;
+        var listUserNormal = getUserData.map((e) => User.fromJson(e)).toList();
+        print(listUserNormal);
+        return listUserNormal;
+      } else {
+        throw Exception("Failed to load user");
+      }
     } catch (e) {
       print(e);
     }
